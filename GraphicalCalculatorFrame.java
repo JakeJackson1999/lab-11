@@ -273,32 +273,32 @@ public class GraphicalCalculatorFrame extends JFrame
 			String operator0 = operators[0];
 			String operator1 = operators[1];
 			
-			if (operator0.equals("*") && operator1.equals("*"))
+			if(operator0.equals("*"))
 			{
-				values = operand0 * operand1 * operand2;
+				values = operand0 * operand1;
 			}
-			else if(operator0.equals("*") && (operator1.equals("+") || operator1.equals("-")))
+			else if(operator0.equals("+"))
 			{
-				if (operator1.equals("+")) 
-				{
-					values = (operand0 * operand1) + operand2;
-				}
-				else if(operator1.equals("-"))
-				{
-					values = (operand0 * operand1) - operand2;
-				}
+				values = operand0 + operand1;
 			}
-			else if(operator1.equals("*") && (operator0.equals("+") || operator0.equals("-")))
+			else if(operator0.equals("-"))
 			{
-				if (operator0.equals("+")) 
-				{
-					values = operand0 + (operand1 * operand2);
-				}
-				else if(operator0.equals("-"))
-				{
-					values = operand0 - (operand1 * operand2);
-				}
+				values = operand0 - operand1;
 			}
+			
+			if(operator1.equals("*"))
+			{
+				values = values * operand2;
+			}
+			else if(operator1.equals("+"))
+			{
+				values = values + operand2;
+			}
+			else if(operator1.equals("-"))
+			{
+				values = values - operand2;
+			}
+			
 			return values;
 		}
 
