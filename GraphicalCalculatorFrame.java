@@ -127,10 +127,7 @@ public class GraphicalCalculatorFrame extends JFrame
 			}
 			
 			
-			// TODO: create the regions. The first regions should be located at REGION_START_X, REGION_START_Y
-			// The regions should be spaced horizontally be REGION_INC_X
-			// The regions should be the same size
-			// There should be 5 regions
+			
 		}
 
 		/**
@@ -166,7 +163,7 @@ public class GraphicalCalculatorFrame extends JFrame
 			for (int i = 0; i < regions.length; i++) {
 				g.drawRect(REGION_START_X + i*REGION_INC_X, REGION_START_Y, REGION_WIDTH, REGION_HEIGHT);
 			}
-			// TODO: Draw bounding boxes on all regions (regions are stored as rectangles):
+			
 
 			// Draw the text at the specified text points:
 			// Pattern is: operand operator operand operator operand = result
@@ -198,9 +195,10 @@ public class GraphicalCalculatorFrame extends JFrame
 				}
 				g.drawString(drawString, textPoints[pt].x, textPoints[pt].y);
 			}
-
+			
+			Rectangle region = regions[selectedRegion];
 			g.setColor(Color.YELLOW);
-			g.fillRect(REGION_START_X, REGION_START_Y, REGION_WIDTH, REGION_HEIGHT);// TODO: Draw translucent rectangle over selected region (use the highlight color):
+			g.fillRect(region.x, region.y, region.width, region.height);
 		}
 
 		/**
@@ -222,7 +220,7 @@ public class GraphicalCalculatorFrame extends JFrame
 				if(regions[i].contains(x, y)) {
 					selectedRegion = i;
 				}
-			}// TODO: check if a clicked point is within a region. If so, set that region to be selected.
+			}
 
 			// Repaint the panel (this will implicitly call paintComponent):
 			this.repaint();
@@ -266,7 +264,7 @@ public class GraphicalCalculatorFrame extends JFrame
 		 */
 		public int evaluate()
 		{
-			// TODO: evaluate the expression. (operand0 operator0 operand1) operator1 operand2
+			
 			int values = 0;
 			int operand0 = operands[0];
 			int operand1 = operands[1];
