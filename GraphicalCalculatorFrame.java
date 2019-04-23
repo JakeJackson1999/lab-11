@@ -222,9 +222,7 @@ public class GraphicalCalculatorFrame extends JFrame
 				if(regions[i].contains(x, y)) {
 					selectedRegion = i;
 				}
-			}
-			
-			// TODO: check if a clicked point is within a region. If so, set that region to be selected.
+			}// TODO: check if a clicked point is within a region. If so, set that region to be selected.
 
 			// Repaint the panel (this will implicitly call paintComponent):
 			this.repaint();
@@ -269,6 +267,41 @@ public class GraphicalCalculatorFrame extends JFrame
 		public int evaluate()
 		{
 			// TODO: evaluate the expression. (operand0 operator0 operand1) operator1 operand2
+			int values = 0;
+			int operand0 = operands[0];
+			int operand1 = operands[1];
+			int operand2 = operands[2];
+			
+			String operator0 = operators[0];
+			String operator1 = operators[1];
+			
+			if (operator0.equals("*") && operator1.equals("*"))
+			{
+				values = operand0 * operand1 * operand2;
+			}
+			else if(operator0.equals("*") && (operator1.equals("+") || operator1.equals("-")))
+			{
+				if (operator1.equals("+")) 
+				{
+					values = (operand0 * operand1) + operand2;
+				}
+				else if(operator1.equals("-"))
+				{
+					values = (operand0 * operand1) - operand2;
+				}
+			}
+			else if(operator1.equals("*") && (operator0.equals("+") || operator0.equals("-")))
+			{
+				if (operator0.equals("+")) 
+				{
+					values = operand0 + (operand1 * operand2);
+				}
+				else if(operator0.equals("-"))
+				{
+					values = operand0 - (operand1 * operand2);
+				}
+			}
+			return values;
 		}
 
 		/** DO NOT MODIFY - DOES NOTHING */
