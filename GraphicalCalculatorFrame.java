@@ -116,6 +116,17 @@ public class GraphicalCalculatorFrame extends JFrame
 		 */
 		private void setupRegions()
 		{
+			regions = new Rectangle[5];
+			
+			int startX = REGION_START_X;
+			int startY = REGION_START_Y;
+			
+			for (int pt = 0; pt < regions.length; pt++) {
+				regions[pt] = new Rectangle(startX + pt*REGION_INC_X, startY);
+				regions[pt].setSize(REGION_WIDTH, REGION_HEIGHT);
+			}
+			
+			
 			// TODO: create the regions. The first regions should be located at REGION_START_X, REGION_START_Y
 			// The regions should be spaced horizontally be REGION_INC_X
 			// The regions should be the same size
