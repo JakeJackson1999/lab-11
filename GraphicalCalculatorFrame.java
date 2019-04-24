@@ -122,8 +122,7 @@ public class GraphicalCalculatorFrame extends JFrame
 			int startY = REGION_START_Y;
 			
 			for (int pt = 0; pt < regions.length; pt++) {
-				regions[pt] = new Rectangle(startX + pt*REGION_INC_X, startY);
-				regions[pt].setSize(REGION_WIDTH, REGION_HEIGHT);
+				regions[pt] = new Rectangle(startX + pt*REGION_INC_X, startY, REGION_WIDTH, REGION_HEIGHT);
 			}
 			
 			
@@ -197,7 +196,7 @@ public class GraphicalCalculatorFrame extends JFrame
 			}
 			
 			Rectangle region = regions[selectedRegion];
-			g.setColor(Color.YELLOW);
+			g.setColor(highlight);
 			g.fillRect(region.x, region.y, region.width, region.height);
 		}
 
@@ -237,7 +236,7 @@ public class GraphicalCalculatorFrame extends JFrame
 		 */
 		public boolean setSelectedRegionContents(String content)
 		{
-			boolean success = true;
+			boolean success = false;
 
 			/* TODO: attempt to set the value of the selected region.
 			 *
@@ -250,7 +249,71 @@ public class GraphicalCalculatorFrame extends JFrame
 			 *
 			 * Return false if the set operation cannot be done.
 			 */
-
+			
+			try {
+				switch(selectedRegion) {
+					case 0:
+						if(Integer.parseInt(content) <= 9 && Integer.parseInt(content) >= 0) 
+						{
+							
+							operands[0] = Integer.parseInt(content);
+							success = true;
+						}
+						
+						break;
+						
+					case 1:
+						if(content.equals("*") || content.equals("+") || content.equals("-")) 
+						{
+							
+							operators[0] = content;
+							success = true;
+						}	
+						
+						break;
+						
+					case 2:
+						if(Integer.parseInt(content) <= 9 && Integer.parseInt(content) >= 0) 
+						{
+							
+							operands[1] = Integer.parseInt(content);
+							success = true;
+						}
+						
+						break;
+						
+					case 3:
+						if(content.equals("*") || content.equals("+") || content.equals("-")) 
+						{
+							
+							operators[1] = content;
+							success = true;
+						}
+						
+						break;
+						
+					case 4:
+						if(Integer.parseInt(content) <= 9 && Integer.parseInt(content) >= 0) 
+						{
+							
+							operands[2] = Integer.parseInt(content);
+							success = true;
+						}
+						
+						break;
+					}
+			}
+				
+			catch(NumberFormatException num)
+			{
+				num.printStackTrace();
+			}
+				
+			/**if(!content.equals("*") && !content.equals("+") && !content.equals("-") && !(Integer.parseInt(content) <= 9) && !(Integer.parseInt(content) >= 0)) 
+			{
+				success = false;
+			}*/
+			
 			this.repaint();
 
 			return success;
@@ -392,13 +455,30 @@ public class GraphicalCalculatorFrame extends JFrame
         this.setLayout(new GridLayout(2, 0));
 
         // TODO: add components to panels
+        panel1.add(operandEntry);
+        
+        panel2.add(add);
+        panel2.add(subtract);
+        panel2.add(multiply);
+        
+        panel3.add(setOperand);
+        panel3.add(setOperator);
+        
+        panel4.add(errorMessage);
 
         // TODO: add radio buttons to the button group
         //default to + operator
+        ops.add(add);
+        ops.add(subtract);
+        ops.add(multiply);
         add.setSelected(true); //remember, the button group ensures only one button is selected
 
         // TODO: add sub-panels into panel 0
-
+        panel0.add(panel1);
+        panel0.add(panel3);
+        panel0.add(panel2);
+        panel0.add(panel4);
+        
         // Adds all panels to frame:
         panel0.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT - 300));
 
@@ -413,7 +493,13 @@ public class GraphicalCalculatorFrame extends JFrame
          * If the set operation succeeds, clear any error messages.
          */
         setOperand.addActionListener((e) -> {
-        		// TODO: attempt to modify the selected region in gcPanel with the new operand value.
+        		boolean result = gcPanel.setSelectedRegionContents(operandEntry.getText());
+        		if (result == true) {
+        			errorMessage.setText("");// TODO: attempt to modify the selected region in gcPanel with the new operand value.
+        		}
+        		else if (result == false){
+        			errorMessage.setText("Failed to set operand value");
+        		}
         	}
         );
 
@@ -428,7 +514,23 @@ public class GraphicalCalculatorFrame extends JFrame
          * If the set operation succeeds, clear any error messages.
          */
         setOperator.addActionListener((e) -> {
+        		if(add.isSelected()) {
+        			gcPanel.setSelectedRegionContents("+");
+        			errorMessage.setText("");
+        		}
+        		else if(subtract.isSelected()) {
+        			gcPanel.setSelectedRegionContents("-");
+        			errorMessage.setText("");
+        		}
+        		else if(multiply.isSelected()) {
+        			gcPanel.setSelectedRegionContents("*");
+        			errorMessage.setText("");
+        		}
+        		else {
+        			errorMessage.setText("Failed to set operator value");
+        		}
     		// TODO: attempt to modify the selected region in gcPanel with the new operator value.
+        	}
         );
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
