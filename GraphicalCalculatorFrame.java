@@ -449,7 +449,7 @@ public class GraphicalCalculatorFrame extends JFrame
      * @param title The title of the window.
      */
     public GraphicalCalculatorFrame() {
-        super("GraphicalCalculatorFrame");
+        super("GraphicalCalculatorFrame"); 
 
         this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         this.setLayout(new GridLayout(2, 0));
